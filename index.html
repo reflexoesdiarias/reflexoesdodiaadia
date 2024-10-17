@@ -3,91 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filosofia Moderna</title>
+    <title>Projeto Eletiva</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-            position: relative;
-        }
-        h1 {
-            margin: 0;
-            font-size: 3em;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-        }
-        p {
-            font-size: 1.5em;
-            margin-top: 10px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s;
-        }
-        .container:hover {
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
-        }
-        .quote {
-            background-color: #e9ecef;
-            border-left: 5px solid #007bff;
-            margin: 20px 0;
-            padding: 15px 20px;
-            border-radius: 5px;
-            transition: transform 0.2s;
-        }
-        .quote:hover {
-            transform: scale(1.02);
-        }
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: #6c757d;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <header>
     <h1>Reflexões Diárias</h1>
-    <p>Curtas Frases Criadas Por  Alguém Que Decidiu Pensar, Para Alguém Que Decidiu Refletir. </p>
+    <p>Curtas Frases Criadas Por Alguém Que Decidiu Pensar, Para Alguém Que Decidiu Refletir.</p>
 </header>
 
 <div class="container">
     <div class="quote">
-        <p>"adicione sua frase aqui "</p>
-    </div>
-    <!-- Adicione suas frases abaixo -->
-   
-    <div class="quote">
         <p>"O melhor da vida é aproveitar tudo com a noção de que nada é perfeito". — Jeferson de Souza</p>
+    </div>
+    <div class="quote">
+        <p>"Olá, escreva aqui!!"</p>
+    </div>
+    <div class="quote">
+        <p>"Add+"</p>
+    </div>
+</div>
+
+<!-- Formulário de Feedback -->
+<div class="feedback-container">
+    <h2>Deixe sua Avaliação</h2>
+    <form id="feedback-form">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required>
         
-    </div>
-    <div class="quote">
-        <p>"Penso, logo existo." — René Descartes</p>
-    </div>
-    <div class="quote">
-        <p>"O sábio não diz tudo o que pensa, mas pensa tudo o que diz." — Aristóteles</p>
-    </div>
-    <!-- Fim das frases -->
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="message">Mensagem:</label>
+        <textarea id="message" name="message" required></textarea>
+        
+        <button type="submit">Enviar</button>
+    </form>
+    <div id="response-message"></div>
 </div>
 
 <footer>
-    <p>&copy; 2024 - Jeferson de Souza</p>
+    <p>&copy; 2024 - Jeferson de Souza - Eletiva Informática</p>
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>
