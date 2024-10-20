@@ -1,53 +1,125 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+!DOCTYPE html>
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto Eletiva</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>Pomodoro by jhef</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+            color: #2c3e50;
+        }
+        #timer {
+            font-size: 48px;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .focus {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .break {
+            background-color: #27ae60;
+            color: white;
+        }
+    </style>
 </head>
 <body>
+    <h1>Cronômetro Pomodoro</h1>
+    <div id="timer">25:00</div>
+    <div id="cycles">Ciclos: 0</div>
+    <button id="startBtn">Iniciar</button>
+    <button id="resetBtn">Resetar</button>
 
-<header>
-    <h1>Reflexões Diárias</h1>
-    <p>Curtas Frases Criadas Por Alguém Que Decidiu Pensar, Para Alguém Que Decidiu Refletir.</p>
-</header>
+    <audio id="focusSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+    <audio id="breakSound" src="https://www.soundjay.com/button/beep-09.wav"></audio>
 
-<div class="container">
-    <div class="quote">
-        <p>"O melhor da vida é aproveitar tudo com a noção de que nada é perfeito". — Jeferson de Souza</p>
-    </div>
-    <div class="quote">
-        <p>"Olá, escreva aqui!!"</p>
-    </div>
-    <div class="quote">
-        <p>"Add+"</p>
-    </div>
-</div>
-
-<!-- Formulário de Feedback -->
-<div class="feedback-container">
-    <h2>Deixe sua Avaliação</h2>
-    <form id="feedback-form">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" required>
+    <script>
+        let timerDisplay = document.getElementById('timer');
+        let cyclesDisplay = document.getElementById('cycles');
+        let startBtn = document.getElementById('startBtn');
+        let resetBtn = document.getElementById('resetBtn');
         
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" required>
-        
-        <label for="message">Mensagem:</label>
-        <textarea id="message" name="message" required></textarea>
-        
-        <button type="submit">Enviar</button>
-    </form>
-    <div id="response-message"></div>
-</div>
+        let focusTime = 25 * 60; // 25 minutos em segundos
+        let breakTime = 5 * 60; // 5 minutos em segundos
+        let longBreakTime = 15 * 60; // 15 minutos de intervalo longo
+        let cycles = 0; // Contador de ciclos
+        let isFocus = true; // Controla se é o tempo de foco ou intervalo
+        let isRunning = false; // Controla se o cronômetro está rodando
+        let intervalId;
 
-<footer>
-    <p>&copy; 2024 - Jeferson de Souza - Eletiva Informática</p>
-</footer>
+        // Função para iniciar o cronômetro
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                startBtn.disabled = true;
+                intervalId = setInterval(countdown, 1000);
+            }
+        }
 
-<script src="script.js"></script>
+        // Função para resetar o cronômetro
+        function resetTimer() {
+            clearInterval(intervalId);
+            isRunning = false;
+            isFocus = true;
+            cycles = 0;
+            startBtn.disabled = false;
+            cyclesDisplay.textContent = "Ciclos: 0";
+            timerDisplay.textContent = "25:00"; // Reseta para 25 minutos
+        }
+
+        // Função que atualiza o cronômetro a cada segundo
+        function countdown() {
+            let currentTime = isFocus ? focusTime : (cycles % 4 === 3 ? longBreakTime : breakTime);
+
+            if (currentTime > 0) {
+                currentTime--;
+                if (isFocus) {
+                    focusTime = currentTime;
+                } else {
+                    breakTime = currentTime;
+                }
+                updateTimerDisplay(currentTime);
+            } else {
+                clearInterval(intervalId);
+                if (isFocus) {
+                    cycles++;
+                    cyclesDisplay.textContent = `Ciclos: ${cycles}`;
+                    document.getElementById("focusSound").play(); // Toca som de foco
+                } else {
+                    document.getElementById("breakSound").play(); // Toca som de intervalo
+                }
+                isFocus = !isFocus; // Alterna entre foco e intervalo
+                focusTime = 25 * 60; // Reseta tempo de foco
+                breakTime = 5 * 60;  // Reseta tempo de intervalo
+                updateTimerDisplay(focusTime);
+                alert(isFocus ? "Hora de focar!" : "Intervalo!");
+                startBtn.disabled = false;
+            }
+        }
+
+        // Função que formata e exibe o tempo
+        function updateTimerDisplay(timeInSeconds) {
+            let minutes = Math.floor(timeInSeconds / 60);
+            let seconds = timeInSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Adicionando os eventos aos botões
+        startBtn.addEventListener('click', startTimer);
+        resetBtn.addEventListener('click', resetTimer);
+    </script>
 </body>
 </html>
